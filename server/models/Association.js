@@ -1,4 +1,4 @@
-const Processor = require("./PCParts/Processor");
+const Processor = require("./pcParts/processor");
 const { Op } = require("sequelize");
 
 // Processor.belongsTo
