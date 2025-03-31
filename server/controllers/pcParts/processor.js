@@ -39,3 +39,17 @@ exports.createProcessor = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getAllProcessors = async (req, res, next) => {
+  try {
+    const processors = await Processor.findAll();
+
+    res.status(200).json({
+      success: true,
+      message: "Processors fetched successfully",
+      data: processors,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
