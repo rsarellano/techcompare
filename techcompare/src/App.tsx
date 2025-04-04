@@ -4,6 +4,7 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import DisplayParts from "./components/pcParts/displayParts";
+import Homepage from "./pages/homepage";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -11,7 +12,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/homepage" element={<DisplayParts />} />
+        <Route path="/homepage" element={<Homepage />} />
       </Routes>
     </>
   );

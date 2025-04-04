@@ -9,7 +9,7 @@ const GPU = db.define("GPU", {
         allowNull: false,
     },
 
-    VRAM: {
+    vram: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
@@ -18,7 +18,7 @@ const GPU = db.define("GPU", {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    FP32: {
+    fp32: {
         type: DataTypes.FLOAT,
     },
     memoryBandwidth: {
