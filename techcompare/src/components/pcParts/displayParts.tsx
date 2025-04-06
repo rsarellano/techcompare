@@ -14,17 +14,17 @@ const displayParts: React.FC = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container bg-sky-600 lg:w-[400px] lg:h-[320px] flex justify-center items-center">
       {!isShowBuildPC ? (
-        <div className=" selection bg-sky-600 lg:w-[400px] lg:h-[200px] flex justify-center items-center ">
+        <div className=" selection  flex justify-center items-center ">
           <button
-            className="m-5 w-[100px] h-[80px] "
+            className="m-5 w-[120px] h-[80px] "
             onClick={handleClickBuildPC}
           >
             <p className="text-xs">Build your PC</p>
           </button>
 
-          <button className="m-5 w-[120px] h-[80px] text-xs">
+          <button className="m-5 w-[120px] h-[80px]">
             <p className="text-xs">Recommended Builds</p>
           </button>
         </div>
