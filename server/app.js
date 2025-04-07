@@ -9,6 +9,14 @@ const { Sequelize } = require("sequelize");
 
 const mainRoute = require("./routes/mainRoute");
 app.use(express.json());
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+
 app.use("/api/v1", mainRoute);
 
 const PORT = process.env.PORT || 3000;
