@@ -4,16 +4,17 @@ import api from "../../axiosConfig/api";
 import "../../index.css";
 
 const BuildPcParts = () => {
-  const [showParts, isShowParts] = useState(false);
+  const [pcParts, setPcParts] = useState<any>([null]);
+  const [showParts, setShowParts] = useState(false);
 
   const [isOpen, setIsOpen] = useState(false);
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleClickShowParts = () => {
-    isShowParts(true);
-  };
+  // const handleClickShowParts = () => {
+  //   isShowParts(true);
+  // };
 
   const processors = [
     { name: "Processor 1", id: 1 },
@@ -23,11 +24,21 @@ const BuildPcParts = () => {
     { name: "Processor 6", id: 5 },
   ];
 
+  const toggleParts = () => {
+    setShowParts(!showParts);
+    if (!showParts && pcParts.length === 0) {
+      fetchPCParts();
+    }
+  };
+
   const fetchPCParts = async () => {
     try {
       const response = await api.get("/api/v1/storedPcParts/displayPcParts");
-      console.log(response);
-    } catch (error) {}
+      setPcParts(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("failed to fetch PC parts", error);
+    }
   };
 
   useEffect(() => {
@@ -36,13 +47,22 @@ const BuildPcParts = () => {
 
   return (
     <div>
+      {!showParts}
       <div>
-        <button className="add-pc-parts-button">Select Part</button>
+        <button className="add-pc-parts-button" onClick={toggleParts}>
+          Select Part
+        </button>
       </div>
       <div>
-        <button className="comic-button" onClick={toggleDropdown}>
-          Processor
-        </button>
+        {pcParts.fields?.map((field: string) => (
+          <div key={field}>
+            {
+              <button className="comic-button" onClick={toggleDropdown}>
+                {field}
+              </button>
+            }
+          </div>
+        ))}
       </div>
 
       {/* dropdown test */}
