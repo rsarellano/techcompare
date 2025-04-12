@@ -3,32 +3,54 @@ import AddSquareSvg from "../../assets/images/add-square-svgrepo-com.svg";
 import api from "../../axiosConfig/api";
 import "../../index.css";
 
+interface Processor {
+  id: string;
+  brand: string;
+  name: string;
+  generation: string;
+  cores: number;
+  threads: number;
+  clockSpeed: number;
+  tdp: number;
+  memorySupport: string;
+  socket: string;
+  price: string;
+  performance: string;
+}
+
 const BuildPcParts = () => {
   const [pcParts, setPcParts] = useState<any>([null]);
   const [showParts, setShowParts] = useState(false);
+
+  //processors
+  const [isProcessors, setIsProcessors] = useState<Processor[]>([]);
+  const [showProcessors, setShowProcessors] = useState(false);
+
+  const fetchProcessors = async () => {
+    try {
+      const response = await api.get<Processor[]>(
+        "/api/v1/processor/getAllProcessors"
+      );
+      setIsProcessors(response.data || []);
+      // console.log(response.data || []);
+    } catch (error) {
+      console.error("failed to fetch processors", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProcessors();
+  }, []);
+
+  /////
 
   const [isOpen, setIsOpen] = useState(false);
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
-  // const handleClickShowParts = () => {
-  //   isShowParts(true);
-  // };
-
-  const processors = [
-    { name: "Processor 1", id: 1 },
-    { name: "Processor 2", id: 2 },
-    { name: "Processor 3", id: 3 },
-    { name: "Processor 4", id: 4 },
-    { name: "Processor 6", id: 5 },
-  ];
-
   const toggleParts = () => {
     setShowParts(!showParts);
-    if (!showParts && pcParts.length === 0) {
-      fetchPCParts();
-    }
   };
 
   const fetchPCParts = async () => {
@@ -47,22 +69,25 @@ const BuildPcParts = () => {
 
   return (
     <div>
-      {!showParts}
       <div>
         <button className="add-pc-parts-button" onClick={toggleParts}>
           Select Part
         </button>
       </div>
       <div>
-        {pcParts.fields?.map((field: string) => (
-          <div key={field}>
-            {
-              <button className="comic-button" onClick={toggleDropdown}>
-                {field}
-              </button>
-            }
+        {showParts && (
+          <div>
+            {pcParts.fields?.map((field: string) => (
+              <div key={field}>
+                {
+                  <button className="comic-button" onClick={toggleDropdown}>
+                    {field}
+                  </button>
+                }
+              </div>
+            ))}
           </div>
-        ))}
+        )}
       </div>
 
       {/* dropdown test */}
@@ -72,7 +97,7 @@ const BuildPcParts = () => {
           {isOpen && (
             <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
               <div className="py-1">
-                {processors.map((processor) => (
+                {isProcessors.map((processor) => (
                   <div
                     key={processor.id}
                     className="px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer"
