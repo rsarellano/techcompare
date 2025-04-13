@@ -18,6 +18,11 @@ interface Processor {
   performance: string;
 }
 
+interface ApiResponse {
+  data: Processor[];
+  message: string;
+}
+
 const BuildPcParts = () => {
   const [pcParts, setPcParts] = useState<any>([null]);
   const [showParts, setShowParts] = useState(false);
@@ -28,11 +33,11 @@ const BuildPcParts = () => {
 
   const fetchProcessors = async () => {
     try {
-      const response = await api.get<Processor[]>(
+      const response = await api.get<ApiResponse>(
         "/api/v1/processor/getAllProcessors"
       );
-      setIsProcessors(response.data || []);
-      // console.log(response.data || []);
+      setIsProcessors(response.data.data || []);
+      console.log(response.data || []);
     } catch (error) {
       console.error("failed to fetch processors", error);
     }
