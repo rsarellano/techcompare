@@ -81,7 +81,7 @@ button:focus-visible {
   border: 2px solid #000;
   border-radius: 10px;
   box-shadow: 4px 4px 0px #000;
-  transition: all 0.3s ease;
+  transition: all 0.003s ease;
   cursor: pointer;
 }
 

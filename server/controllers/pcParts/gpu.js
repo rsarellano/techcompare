@@ -23,3 +23,17 @@ exports.createGpu = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getAllGpu = async (req, res, next) => {
+  try {
+    const gpu = await GPU.findAll();
+
+    res.status(200).json({
+      success: true,
+      message: "GPU fetched successfully",
+      data: gpu,
+    });
+  } catch (error) {
+    next(error);
+  }
+};

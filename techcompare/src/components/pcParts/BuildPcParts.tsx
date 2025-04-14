@@ -79,9 +79,9 @@ const BuildPcParts = () => {
           Select Part
         </button>
       </div>
-      <div>
+      <div className="w-[300px] h-[100px]">
         {showParts && (
-          <div>
+          <div className="flex flex-row">
             {pcParts.fields?.map((field: string) => (
               <div key={field}>
                 {
