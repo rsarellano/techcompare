@@ -29,7 +29,7 @@ const BuildPcParts = () => {
 
   //processors
   const [isProcessors, setIsProcessors] = useState<Processor[]>([]);
-  const [showProcessors, setShowProcessors] = useState(false);
+  // const [showProcessors, setShowProcessors] = useState(false);
 
   const fetchProcessors = async () => {
     try {
