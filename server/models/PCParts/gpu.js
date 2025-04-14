@@ -28,3 +28,5 @@ const GPU = db.define("GPU", {
     type: DataTypes.INTEGER,
   },
 });
+
+module.exports = GPU;
