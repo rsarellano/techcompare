@@ -18,8 +18,22 @@ interface Processor {
   performance: string;
 }
 
-interface ApiResponse {
+interface Gpu {
+  id: string;
+  vram: number;
+  name: string;
+  fp32: number;
+  memoryBandwidth: number;
+  clockSpeed: number;
+}
+
+interface ApiResponseProcessor {
   data: Processor[];
+  message: string;
+}
+
+interface ApiResponseGpu {
+  data: Gpu[];
   message: string;
 }
 
@@ -28,12 +42,14 @@ const BuildPcParts = () => {
   const [showParts, setShowParts] = useState(false);
 
   //processors
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [isProcessors, setIsProcessors] = useState<Processor[]>([]);
-  // const [showProcessors, setShowProcessors] = useState(false);
+  const [isGpu, setIsGpu] = useState<Gpu[]>([]);
+  const [showProcessors, setShowProcessors] = useState(false);
 
   const fetchProcessors = async () => {
     try {
-      const response = await api.get<ApiResponse>(
+      const response = await api.get<ApiResponseProcessor>(
         "/api/v1/processor/getAllProcessors"
       );
       setIsProcessors(response.data.data || []);
@@ -49,9 +65,25 @@ const BuildPcParts = () => {
 
   /////
 
-  const [isOpen, setIsOpen] = useState(false);
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
+  //GPU
+  const fetchGpu = async () => {
+    try {
+      const response = await api.get<ApiResponseGpu>("/api/v1/gpu/getAllGpu");
+      setIsGpu(response.data.data || []);
+      console.log(response.data || []);
+    } catch (error) {
+      console.error(" failed to fetch GPUs", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchGpu();
+  }, []);
+
+  ///
+
+  const toggleDropdown = (field: string) => {
+    setActiveDropdown(activeDropdown === field ? null : field);
   };
 
   const toggleParts = () => {
@@ -85,7 +117,10 @@ const BuildPcParts = () => {
             {pcParts.fields?.map((field: string) => (
               <div key={field}>
                 {
-                  <button className="comic-button" onClick={toggleDropdown}>
+                  <button
+                    className="comic-button"
+                    onClick={() => toggleDropdown(field)}
+                  >
                     {field}
                   </button>
                 }
@@ -99,20 +134,48 @@ const BuildPcParts = () => {
 
       <div>
         <div className="relative inline-block">
-          {isOpen && (
-            <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-              <div className="py-1">
-                {isProcessors.map((processor) => (
-                  <div
-                    key={processor.id}
-                    className="px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer"
-                    onClick={() => {
-                      setIsOpen(false);
-                    }}
-                  >
-                    {processor.name}
-                  </div>
-                ))}
+          {activeDropdown && (
+            <div className="absolute left-0 mt-2 w-64 bg-white rounded-md shadow-lg z-10">
+              {/* Processors Section */}
+              <div className="border-b border-gray-100">
+                <div className="px-4 py-2 text-sm font-medium text-gray-500 uppercase tracking-wider">
+                  Processors
+                </div>
+                <div className="py-1">
+                  {isProcessors.map((processor) => (
+                    <div
+                      key={processor.id}
+                      className="px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => {
+                        setActiveDropdown(null);
+                        // Add your processor selection handler here
+                      }}
+                    >
+                      {processor.name}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* GPUs Section */}
+              <div className="border-b border-gray-100">
+                <div className="px-4 py-2 text-sm font-medium text-gray-500 uppercase tracking-wider">
+                  GPUs
+                </div>
+                <div className="py-1">
+                  {isGpu.map((gpu) => (
+                    <div
+                      key={gpu.id}
+                      className="px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => {
+                        setActiveDropdown(null);
+                        // Add your GPU selection handler here
+                      }}
+                    >
+                      {gpu.name}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           )}
