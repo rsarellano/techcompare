@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import AddSquareSvg from "../../assets/images/add-square-svgrepo-com.svg";
 import api from "../../axiosConfig/api";
 import "../../index.css";
+import ProcessorOptions from "./pcPartsOptions/processorOptions";
+import GpuOptions from "./pcPartsOptions/gpuOptions";
 
 interface Processor {
   id: string;
@@ -43,42 +45,42 @@ const BuildPcParts = () => {
 
   //processors
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const [isProcessors, setIsProcessors] = useState<Processor[]>([]);
-  const [isGpu, setIsGpu] = useState<Gpu[]>([]);
+  // const [isProcessors, setIsProcessors] = useState<Processor[]>([]);
+  // const [isGpu, setIsGpu] = useState<Gpu[]>([]);
   const [showProcessors, setShowProcessors] = useState(false);
 
-  const fetchProcessors = async () => {
-    try {
-      const response = await api.get<ApiResponseProcessor>(
-        "/api/v1/processor/getAllProcessors"
-      );
-      setIsProcessors(response.data.data || []);
-      console.log(response.data || []);
-    } catch (error) {
-      console.error("failed to fetch processors", error);
-    }
-  };
+  // const fetchProcessors = async () => {
+  //   try {
+  //     const response = await api.get<ApiResponseProcessor>(
+  //       "/api/v1/processor/getAllProcessors"
+  //     );
+  //     setIsProcessors(response.data.data || []);
+  //     console.log(response.data || []);
+  //   } catch (error) {
+  //     console.error("failed to fetch processors", error);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchProcessors();
-  }, []);
+  // useEffect(() => {
+  //   fetchProcessors();
+  // }, []);
 
   /////
 
   //GPU
-  const fetchGpu = async () => {
-    try {
-      const response = await api.get<ApiResponseGpu>("/api/v1/gpu/getAllGpu");
-      setIsGpu(response.data.data || []);
-      console.log(response.data || []);
-    } catch (error) {
-      console.error(" failed to fetch GPUs", error);
-    }
-  };
+  // const fetchGpu = async () => {
+  //   try {
+  //     const response = await api.get<ApiResponseGpu>("/api/v1/gpu/getAllGpu");
+  //     setIsGpu(response.data.data || []);
+  //     console.log(response.data || []);
+  //   } catch (error) {
+  //     console.error(" failed to fetch GPUs", error);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchGpu();
-  }, []);
+  // useEffect(() => {
+  //   fetchGpu();
+  // }, []);
 
   ///
 
@@ -107,6 +109,7 @@ const BuildPcParts = () => {
   return (
     <div>
       <div>
+        <div>{/* <ProcessorOptions /> */}</div>
         <button className="add-pc-parts-button" onClick={toggleParts}>
           Select Part
         </button>
@@ -142,18 +145,7 @@ const BuildPcParts = () => {
                   Processors
                 </div>
                 <div className="py-1">
-                  {isProcessors.map((processor) => (
-                    <div
-                      key={processor.id}
-                      className="px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer"
-                      onClick={() => {
-                        setActiveDropdown(null);
-                        // Add your processor selection handler here
-                      }}
-                    >
-                      {processor.name}
-                    </div>
-                  ))}
+                  <ProcessorOptions />
                 </div>
               </div>
 
@@ -162,20 +154,7 @@ const BuildPcParts = () => {
                 <div className="px-4 py-2 text-sm font-medium text-gray-500 uppercase tracking-wider">
                   GPUs
                 </div>
-                <div className="py-1">
-                  {isGpu.map((gpu) => (
-                    <div
-                      key={gpu.id}
-                      className="px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer"
-                      onClick={() => {
-                        setActiveDropdown(null);
-                        // Add your GPU selection handler here
-                      }}
-                    >
-                      {gpu.name}
-                    </div>
-                  ))}
-                </div>
+                <GpuOptions />
               </div>
             </div>
           )}
