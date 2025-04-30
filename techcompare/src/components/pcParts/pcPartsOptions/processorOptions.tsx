@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import api from "../../../axiosConfig/api";
 
 interface Processor {
-  id: string;
+  _id: string;
   brand: string;
   name: string;
   generation: string;
@@ -22,16 +22,16 @@ interface ApiResponseProcessor {
   message: string;
 }
 
-const processorOptions = () => {
-  const [isProcessors, setIsProcessor] = useState<Processor[]>([]);
+const ProcessorOptions = () => {
+  const [processors, setProcessors] = useState<Processor[]>([]);
 
   const fetchProcessors = async () => {
     try {
       const response = await api.get<ApiResponseProcessor>(
         "/api/v1/processor/getAllProcessors"
       );
-      setIsProcessor(response.data.data || []);
-      console.log(response.data.data);
+
+      setProcessors(response.data.data || []);
     } catch (error) {
       console.error("failed to fetch processor", error);
     }
@@ -41,17 +41,23 @@ const processorOptions = () => {
     fetchProcessors();
   }, []);
 
+  // useEffect(() => {
+  //   console.log(
+  //     "Processor IDs:",
+  //     processors.map((p) => p.id)
+  //   );
+  // }, [processors]);
+
   return (
     <div>
       <div className="border-b border-gray-100">
         <div className="py-1">
-          {isProcessors.map((processor) => (
+          {processors.map((processor) => (
             <div
-              key={processor.id}
+              key={processor._id}
               className="px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer"
-              onClick={() => {}}
             >
-              {processor.name}
+              <button>{processor.name}</button>
             </div>
           ))}
         </div>
@@ -60,4 +66,4 @@ const processorOptions = () => {
   );
 };
 
-export default processorOptions;
+export default ProcessorOptions;

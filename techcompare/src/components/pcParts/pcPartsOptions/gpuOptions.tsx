@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import api from "../../../axiosConfig/api";
 
 interface Gpu {
-  id: string;
+  _id: string;
   name: string;
   vram: number;
   fp32: number;
@@ -37,12 +37,16 @@ const gpuOptions = () => {
     <div>
       <div className="border-b border-gray-100">
         <div className="py-1">
-          {isGpu.map((gpu) => (
-            <div
-              key={gpu.id}
-              className="px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer"
-            ></div>
-          ))}
+          {isGpu.map((gpu) => {
+            return (
+              <div
+                key={gpu._id}
+                className="px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer"
+              >
+                <button className="font-medium"> {gpu.name}</button>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
