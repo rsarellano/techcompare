@@ -4,6 +4,7 @@ import api from "../../axiosConfig/api";
 import "../../index.css";
 import ProcessorOptions from "./pcPartsOptions/processorOptions";
 import GpuOptions from "./pcPartsOptions/gpuOptions";
+import DisplayedSelectedPcParts from "./displayedSelectedPcParts/displayedSelectedPcParts";
 
 const BuildPcParts = () => {
   const [pcParts, setPcParts] = useState<any>([null]);
@@ -69,20 +70,20 @@ const BuildPcParts = () => {
                   {selectedPart}
                 </div>
                 <div className="py-1">
-                  {selectedPart.toLowerCase() === "processor" && (
-                    <ProcessorOptions />
-                  )}
-                  {selectedPart.toLowerCase() === "gpu" && <GpuOptions />}
-                  {selectedPart.toLowerCase() === "motherboard" && (
-                    <GpuOptions />
-                  )}
-                  {selectedPart.toLowerCase() === "memory" && <GpuOptions />}
-                  {selectedPart.toLowerCase() === "storage" && <GpuOptions />}
+                  {selectedPart === "processor" && <ProcessorOptions />}
+                  {selectedPart === "gpu" && <GpuOptions />}
+                  {selectedPart === "motherboard" && <GpuOptions />}
+                  {selectedPart === "memory" && <GpuOptions />}
+                  {selectedPart === "storage" && <GpuOptions />}
                 </div>
               </div>
             </div>
           )}
         </div>
+      </div>
+
+      <div>
+        <DisplayedSelectedPcParts />
       </div>
     </div>
   );

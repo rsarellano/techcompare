@@ -41,13 +41,6 @@ const ProcessorOptions = () => {
     fetchProcessors();
   }, []);
 
-  // useEffect(() => {
-  //   console.log(
-  //     "Processor IDs:",
-  //     processors.map((p) => p.id)
-  //   );
-  // }, [processors]);
-
   return (
     <div>
       <div className="border-b border-gray-100">
@@ -57,7 +50,11 @@ const ProcessorOptions = () => {
               key={processor._id}
               className="px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer"
             >
-              <button>{processor.name}</button>
+              <button
+              // onClick={}
+              >
+                {processor.name}
+              </button>
             </div>
           ))}
         </div>
