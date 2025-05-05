@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { usePcPartsContext } from "../pcPartsContext/pcPartsContext";
 import api from "../../../axiosConfig/api";
 
 interface Processor {
@@ -24,6 +24,7 @@ interface ApiResponseProcessor {
 
 const ProcessorOptions = () => {
   const [processors, setProcessors] = useState<Processor[]>([]);
+  const { isProcessor } = usePcPartsContext();
 
   const fetchProcessors = async () => {
     try {
@@ -50,9 +51,7 @@ const ProcessorOptions = () => {
               key={processor._id}
               className="px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer"
             >
-              <button
-              // onClick={}
-              >
+              <button onClick={() => isProcessor(processor.name)}>
                 {processor.name}
               </button>
             </div>

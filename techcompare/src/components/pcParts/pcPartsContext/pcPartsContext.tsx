@@ -28,7 +28,7 @@ export const PcPartsProvider = ({
   );
 };
 
-const usePcPartsContext = () => {
+export const usePcPartsContext = () => {
   const context = useContext(PcPartsContext);
   if (!context)
     throw new Error("usePcPartsContext must be used within PcPartsProvider");
