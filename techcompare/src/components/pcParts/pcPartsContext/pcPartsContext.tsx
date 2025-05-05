@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, { createContext, useState, useContext } from "react";
 
 interface PcPartsContextType {
   processor: string;
@@ -14,8 +14,23 @@ const PcPartsContext = createContext<PcPartsContextType>({
   isGpu: () => {},
 });
 
-const pcPartsContext = () => {
-  return <div>processorContext</div>;
+export const PcPartsProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const [processor, isProcessor] = useState<string>("All");
+  const [gpu, isGpu] = useState<string>("AL");
+  return (
+    <PcPartsContext.Provider value={{ processor, isProcessor, gpu, isGpu }}>
+      {children}
+    </PcPartsContext.Provider>
+  );
 };
 
-export default pcPartsContext;
+const usePcPartsContext = () => {
+  const context = useContext(PcPartsContext);
+  if (!context)
+    throw new Error("usePcPartsContext must be used within PcPartsProvider");
+  return context;
+};
