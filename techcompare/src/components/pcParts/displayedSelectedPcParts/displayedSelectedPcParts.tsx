@@ -1,9 +1,9 @@
 import React from "react";
 import { usePcPartsContext } from "../pcPartsContext/pcPartsContext";
 
-const displayedSelectedPcParts = () => {
+const DisplayedSelectedPcParts = () => {
   const { processor } = usePcPartsContext();
-  return <div>Selected Processor: {processor} </div>;
+  return <div>{processor} </div>;
 };
 
-export default displayedSelectedPcParts;
+export default DisplayedSelectedPcParts;

@@ -20,7 +20,7 @@ export const PcPartsProvider = ({
   children: React.ReactNode;
 }) => {
   const [processor, isProcessor] = useState<string>("All");
-  const [gpu, isGpu] = useState<string>("AL");
+  const [gpu, isGpu] = useState<string>("All");
   return (
     <PcPartsContext.Provider value={{ processor, isProcessor, gpu, isGpu }}>
       {children}
