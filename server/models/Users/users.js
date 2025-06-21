@@ -7,5 +7,17 @@ const Users = db.define("Users", {
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false
+    },
+
+    user_email: {
+        type: DataType.STRING,
+       allowNull:false 
+    },
+
+    user_passwrd: {
+        type: DataTypes.STRING,
+        allowNull:false
+        
     }
+    
 })
